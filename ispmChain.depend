@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1595288879 source:c:\users\gdb\onedrive\desktop\c++\testchain\ispmchain\main.cpp
+	<cstdint>
+	<iostream>
+	<sstream>
+	<vector>
+	<time.h>
+	<cstring>
+	<fstream>
+	<string>
+
