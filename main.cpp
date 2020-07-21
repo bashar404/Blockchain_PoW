@@ -203,14 +203,14 @@ class Block {
 public:
     string Hash;
     string prev_hash;
-    Block(uint32_t index_in, string data_in);
+    Block(uint32_t index_in, string data_in); //constructor: name of constructor same as class, no return type
     void MineBlock(uint32_t difficulty_rate);
 
 private:
-    uint32_t _nIndex;
+    uint32_t nIndex;
     uint32_t nonce;
     string data;
-    time_t Time;
+    time_t Time;  //#include<time.h>
 
     string hash_calculate();
 };
@@ -225,11 +225,13 @@ private:
     uint32_t _difficulty_rate;
     vector<Block> blockchain;
 
-    Block _GetLastBlock() const;
+    Block GetLastBlock();
 };
 
-Block::Block(uint32_t index_in, string data_in) : _nIndex(index_in), data(data_in)
+Block::Block(uint32_t index_in, string data_in) //: nIndex(index_in), data(data_in)
 {
+    index_in=nIndex;
+    data_in=data;
     nonce = 0;
     Time = time(nullptr);
 
@@ -238,12 +240,12 @@ Block::Block(uint32_t index_in, string data_in) : _nIndex(index_in), data(data_i
 
 void Block::MineBlock(uint32_t difficulty_rate)
 {
-    char cstr[difficulty_rate + 1];
+    char cstr[difficulty_rate + 1];  //create an array of characters with a length one greater that the value specified for Difficulty rate
     for (uint32_t i = 0; i < difficulty_rate; ++i)
     {
-        cstr[i] = '0';
+        cstr[i] = '0';   //A for loop is used to fill the array with zeros
     }
-    cstr[difficulty_rate] = '\0';
+    cstr[difficulty_rate] = '\0';  // final array item being given the string terminator character (\0)
 
     string str(cstr);
 
@@ -260,6 +262,8 @@ void Block::MineBlock(uint32_t difficulty_rate)
     while (Hash.substr(0, difficulty_rate) != str);
 
     cout << "Block mined: " << Hash << endl;
+
+    cout << "Proof of Work (PoW): " << nonce << endl << endl;
 }
 
 
@@ -271,8 +275,8 @@ void Block::MineBlock(uint32_t difficulty_rate)
 inline string Block::hash_calculate()
 {
     stringstream ss;
-    ss << _nIndex << prev_hash << Time << data << nonce;
-
+    ss << nIndex << prev_hash << Time << data << nonce;
+    cout<< nIndex<<endl<<endl; cout<< prev_hash<<endl<<endl; cout<< Time<<endl<<endl; cout<< data<<endl<<endl; cout<< nonce<<endl<<endl;;
     return sha256(ss.str());
 }
 /*
@@ -294,12 +298,12 @@ Blockchain::Blockchain()
 
 void Blockchain::AddBlock(Block new_block)
 {
-    new_block.prev_hash = _GetLastBlock().Hash;
+    new_block.prev_hash = GetLastBlock().Hash;
     new_block.MineBlock(_difficulty_rate);
     blockchain.push_back(new_block);
 }
 
-Block Blockchain::_GetLastBlock() const
+Block Blockchain::GetLastBlock()
 {
     return blockchain.back();
 }
