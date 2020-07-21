@@ -203,7 +203,7 @@ class Block {
 public:
     string Hash;
     string prev_hash;
-    Block(uint32_t index_in, const string &data_in);
+    Block(uint32_t index_in, string data_in);
     void MineBlock(uint32_t difficulty_rate);
 
 private:
@@ -212,7 +212,7 @@ private:
     string data;
     time_t Time;
 
-    string hash_calculate() const;
+    string hash_calculate();
 };
 
 class Blockchain {
@@ -228,7 +228,7 @@ private:
     Block _GetLastBlock() const;
 };
 
-Block::Block(uint32_t index_in, const string &data_in) : _nIndex(index_in), data(data_in)
+Block::Block(uint32_t index_in, string data_in) : _nIndex(index_in), data(data_in)
 {
     nonce = 0;
     Time = time(nullptr);
@@ -268,7 +268,7 @@ void Block::MineBlock(uint32_t difficulty_rate)
 // complier inline keyword dekle e oitar code okane expand kore dey
 //function er size choto hole inline kori
 
-inline string Block::hash_calculate() const
+inline string Block::hash_calculate()
 {
     stringstream ss;
     ss << _nIndex << prev_hash << Time << data << nonce;
